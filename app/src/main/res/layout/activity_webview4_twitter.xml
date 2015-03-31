@@ -6,16 +6,11 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.androidy.tpt.ui.SplashActivity"
-    android:background="@drawable/back">
+    tools:context="com.androidy.tpt.ui.Webview4TwitterActivity">
 
-
-    <ImageView
+    <TextView
+        android:text="@string/hello_world"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:src="@drawable/tree"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:background="#00ffffff"/>
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>

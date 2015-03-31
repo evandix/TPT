@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:background = "#FFFF927D">
+
+
+    <TextView
+
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text='"KISS. Keep it a Simple Strategy to start with.  Use low risk strategies such as ‘Thumbs-Up/Thumbs-Down’; Think (or Write) -Pair-Share; One-Minute Paper; or Notes Comparison. These activities are easy to explain, can be completed very quickly, and are not high-stakes exercises for students who aren’t used to active learning being part of their class.  -Colleen Lowe and Alison Lewis, Northern Alberta Institute of Technology (NAIT)",'
+        android:id="@+id/tipText"
+        android:scrollbars="vertical"
+
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:textColor="@android:color/white"
+
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/shareButton"
+        android:layout_toRightOf="@+id/linkButton"
+        android:textSize="15sp"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
+        android:gravity="center_horizontal|left"/>
+
+
+    <ImageButton
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:id="@+id/linkButton"
+        android:background="#01ffffff"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+
+
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/shareButton"
+        android:src="@drawable/whiteshare"
+        android:background="#00ffffff"
+        android:layout_marginLeft="10dp"
+
+
+
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:paddingRight="10dp"/>
+
+</RelativeLayout>
