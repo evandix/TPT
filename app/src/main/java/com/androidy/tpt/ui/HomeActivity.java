@@ -1,8 +1,10 @@
 package com.androidy.tpt.ui;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.net.ConnectivityManager;
@@ -13,11 +15,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidy.tpt.R;
 import com.androidy.tpt.adapter.TipAdapter;
+import com.androidy.tpt.alarm.SetingsActivity;
 import com.androidy.tpt.info.Tips;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
@@ -63,12 +67,52 @@ public class HomeActivity extends ListActivity {
     private Tips[] tipsArray;
     private String tipFromToday;
     private String date;
+    private ImageButton infoButton;
+    private ImageButton settingsButton;
+    private ImageButton notifyButton;
+    private ProgressBar mProgressBar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+        mProgressBar.setVisibility(View.INVISIBLE);
+
+
+        infoButton = (ImageButton) findViewById(R.id.infoButton);
+        settingsButton = (ImageButton) findViewById(R.id.settingsButton);
+        notifyButton = (ImageButton) findViewById(R.id.notifyButton);
+
+        infoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goToInfo = new Intent(HomeActivity.this , InfoActivity.class);
+                HomeActivity.this.startActivity(goToInfo);
+
+
+            }
+        });
+
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goToSettings = new Intent(HomeActivity.this , SetingsActivity.class);
+                HomeActivity.this.startActivity(goToSettings);
+            }
+        });
+
+        notifyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goToNotify = new Intent(HomeActivity.this , NotifyActivity.class);
+                HomeActivity.this.startActivity(goToNotify);
+            }
+        });
+
 
 
         twitterButton = (ImageButton) findViewById(R.id.twitterButton);
@@ -169,7 +213,9 @@ public class HomeActivity extends ListActivity {
     private void setUpList() {
         String urlString = "http://intense-mountain-5585.herokuapp.com/tip_lists/1/categories/1/tips.json";
 
-        if (networkIsAvailable()) {               // check to see is netwok is availibe before we get online
+        if (networkIsAvailable()) {
+            mProgressBar.setVisibility(View.VISIBLE);
+                      // check to see is netwok is availibe before we get online
 
             OkHttpClient client = new OkHttpClient();
             final Request request = new Request.Builder()
@@ -181,11 +227,25 @@ public class HomeActivity extends ListActivity {
                 @Override
                 public void onFailure(Request request, IOException e) {
 
+                    AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+                    builder.setMessage("Something went wrong. Please try again");
+                    builder.setTitle("Sorry");
+                    builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    AlertDialog dialog = builder.show();
+                    dialog.show();
+
                 }
 
                 @Override
                 public void onResponse(Response response) throws IOException {
+
                     try {
+
                         String jsonData = response.body().string();
                         Log.v(TAG, jsonData);
                         if (response.isSuccessful()) {
@@ -208,6 +268,17 @@ public class HomeActivity extends ListActivity {
 
 
                         } else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+                            builder.setMessage("Something went wrong. Please try again");
+                            builder.setTitle("Sorry");
+                            builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            AlertDialog dialog = builder.show();
+                            dialog.show();
 
                         }
                     } catch (IOException e) {
@@ -219,7 +290,17 @@ public class HomeActivity extends ListActivity {
                 }
             });
         } else {
-            Toast.makeText(HomeActivity.this , "No connection" , Toast.LENGTH_SHORT).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+            builder.setMessage("No internet connection could be established. Please try again.");
+            builder.setTitle("Sorry");
+            builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            AlertDialog dialog = builder.show();
+            dialog.show();
 
         }
     }
@@ -305,6 +386,7 @@ public class HomeActivity extends ListActivity {
         String todaysDatee = getDate(new GregorianCalendar());
         todaysDate.setText(todaysDatee);
 
+        mProgressBar.setVisibility(View.INVISIBLE);
 
 
 

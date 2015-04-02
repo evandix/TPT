@@ -6,5 +6,8 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="title_activity_webview4_twitter">Webview4TwitterActivity</string>
+    <string name="title_activity_alarm">AlarmActivity</string>
+    <string name="title_activity_info">InfoActivity</string>
+    <string name="title_activity_notify">NotifyActivity</string>
 
 </resources>

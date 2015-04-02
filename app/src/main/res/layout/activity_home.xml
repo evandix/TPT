@@ -32,10 +32,10 @@
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imageView"
-        android:layout_centerInParent="true"
-        android:layout_margin="5dp"
-        android:id="@+id/linearLayout">
+        android:id="@+id/linearLayoutSocail"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp">
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -83,21 +83,13 @@
         android:layout_height="wrap_content"
         android:text="Last 5 Day's Tips"
         android:id="@+id/lastFiveDaysTipsBanner"
-        android:layout_below="@+id/linearLayout"
-        android:layout_centerHorizontal="true"
         android:background="#ff9f9f9f"
         android:gravity="center_horizontal"
         android:textColor="#ffffffff"
-        android:textSize="16sp"/>
-
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@android:id/list"
-        android:layout_below="@+id/lastFiveDaysTipsBanner"
-        android:layout_centerHorizontal="true"
-        android:divider="#ff9f9f9f"
-        android:dividerHeight="1dp"/>
+        android:textSize="16sp"
+        android:layout_below="@id/linearLayoutSocail"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -107,8 +99,9 @@
         android:layout_alignTop="@+id/textView"
         android:layout_centerHorizontal="true"
         android:textColor="@android:color/white"
-        android:textSize="20sp"
-        android:layout_marginTop="5dp"/>
+        android:textSize="23sp"
+        android:layout_marginTop="5dp"
+        />
 
     <TextView
         android:layout_width="300dp"
@@ -122,7 +115,67 @@
         android:scrollbars="vertical"
         android:gravity="center_horizontal"
         android:layout_alignBottom="@+id/imageView"
-        />
+        android:layout_marginBottom="10dp"
+        android:textSize="15sp"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:background="#ffe6e6e6"
+        android:id="@+id/lineearLayoutButtons">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButton"
+            android:src="@drawable/home"
+            android:layout_weight="1"
+            android:background="#ffe6e6e6"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/infoButton"
+            android:src="@drawable/info"
+            android:layout_weight="1"
+            android:background="#ffe6e6e6"
+            android:layout_marginTop="1dp"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/settingsButton"
+            android:src="@drawable/grear"
+            android:layout_weight="1"
+            android:background="#ffe6e6e6"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/notifyButton"
+            android:src="@drawable/notify"
+            android:layout_weight="1"
+            android:background="#ffe6e6e6"/>
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@android:id/list"
+        android:layout_below="@+id/lastFiveDaysTipsBanner"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/lineearLayoutButtons"/>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
 
 
 </RelativeLayout>

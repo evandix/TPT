@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.androidy.tpt"
-        minSdkVersion 17
+        minSdkVersion 10
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
@@ -21,9 +21,10 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    // You must install or update the Support Repository through the SDK manager to use this dependency.
     compile 'com.squareup.okhttp:okhttp:2.3.0'
-
-
-
-
+    // You must install or update the Support Repository through the SDK manager to use this dependency.
+    compile 'com.android.support:support-v4:18.0.+'
+    compile 'com.android.support:appcompat-v7:19.+'
 }

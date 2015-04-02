@@ -29,7 +29,8 @@
         android:textSize="15sp"
         android:focusableInTouchMode="true"
         android:focusable="true"
-        android:gravity="center_horizontal|left"/>
+        android:gravity="center_horizontal|left"
+        />
 
 
     <ImageButton
