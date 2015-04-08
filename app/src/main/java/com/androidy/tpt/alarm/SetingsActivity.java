@@ -72,20 +72,7 @@ public class SetingsActivity extends Activity {
             public void onClick(View v) {
                 if (toggle1.isChecked()) {
 
-                    Log.d("MyActivity", "Alarm On");
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getCurrentHour());
-                    calendar.set(Calendar.MINUTE, alarmTimePicker.getCurrentMinute());
-                    Intent myIntent = new Intent(SetingsActivity.this, AlarmReceiver.class);
-                    pendingIntent = PendingIntent.getBroadcast(SetingsActivity.this, 0, myIntent, 0);
-                    alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-
-
-
-
                 } else {
-
-                    alarmManager.cancel(pendingIntent);
 
                     Log.d("MyActivity", "Alarm Off");
 
@@ -99,13 +86,32 @@ public class SetingsActivity extends Activity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (toggle1.isChecked()) {
+                    Log.d("MyActivity", "Alarm On");
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getCurrentHour());
+                    calendar.set(Calendar.MINUTE, alarmTimePicker.getCurrentMinute());
+                    Intent myIntent = new Intent(SetingsActivity.this, AlarmReceiver.class);
+                    pendingIntent = PendingIntent.getBroadcast(SetingsActivity.this, 0, myIntent, 0);
+                    alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), 1000 * 60 * 60 * 24 , pendingIntent);
+
+                } else {
+                    alarmManager.cancel(pendingIntent);
+                }
+
+                setDefaults("etatToggle", toggle1.isChecked(), SetingsActivity.this);
+
                 Intent intent = new Intent(SetingsActivity.this , HomeActivity.class);
                 SetingsActivity.this.startActivity(intent);
+
             }
         });
 
 
     }
+
+    /*
 
     @Override
     public void onStop(){
@@ -113,6 +119,8 @@ public class SetingsActivity extends Activity {
 
         setDefaults("etatToggle", toggle1.isChecked(), this);
     }
+
+    */
 
 
 

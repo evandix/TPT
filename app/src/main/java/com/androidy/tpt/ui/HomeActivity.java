@@ -28,6 +28,9 @@ import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+import com.sromku.simple.fb.SimpleFacebook;
+import com.sromku.simple.fb.entities.Feed;
+import com.sromku.simple.fb.listeners.OnPublishListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -72,11 +75,15 @@ public class HomeActivity extends ListActivity {
     private ImageButton notifyButton;
     private ProgressBar mProgressBar;
 
+    private SimpleFacebook mSimpleFacebook;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        mSimpleFacebook = SimpleFacebook.getInstance(this);
 
 
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -150,6 +157,8 @@ public class HomeActivity extends ListActivity {
         faceBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                publishToFacebook(todaysTipMessage);
 
             }
         });
@@ -457,8 +466,8 @@ public class HomeActivity extends ListActivity {
 
     private String getBaseKeyForTips(GregorianCalendar gc) {
         String monthName = "April";
-        int monthInt = gc.get(Calendar.MONTH) + 2;
-        int dayInt =  gc.get(Calendar.DATE) - 1;
+        int monthInt = gc.get(Calendar.MONTH) + 1;
+        int dayInt =  gc.get(Calendar.DATE);
 
 
         if (monthInt == 1 ) {
@@ -493,7 +502,7 @@ public class HomeActivity extends ListActivity {
 
     private String getBaseKeyForTodaysTip(GregorianCalendar gc) {
         String monthName = "April";
-        int monthInt = gc.get(Calendar.MONTH) + 2;
+        int monthInt = gc.get(Calendar.MONTH) + 1;
         int dayInt =  gc.get(Calendar.DATE);
 
 
@@ -529,7 +538,7 @@ public class HomeActivity extends ListActivity {
 
     private String getDate(GregorianCalendar gc) {
         String monthName = "April";
-        int monthInt = gc.get(Calendar.MONTH) + 2;
+        int monthInt = gc.get(Calendar.MONTH) + 1;
         int dayInt =  gc.get(Calendar.DATE);
         int year = gc.get(Calendar.YEAR);
 
@@ -675,6 +684,40 @@ do {
             throw new RuntimeException("URLEncoder.encode() failed for " + s);
         }
     }
+
+    private void publishToFacebook(String tip){
+        OnPublishListener onPublishListener = new OnPublishListener() {
+            @Override
+            public void onComplete(String postId) {
+                Log.i("", "Published successfully. The new post id = " + postId);
+            }
+
+            @Override
+            public void onFail(String reason) {
+                super.onFail(reason);
+
+
+            }
+
+            /*
+             * You can override other methods here:
+             * onThinking(), onFail(String reason), onException(Throwable throwable)
+             */
+        };
+
+        Feed feed = new Feed.Builder()
+                .setMessage(tip)
+                .setName("TPT")
+                .setCaption(tip)
+                .setDescription(tip)
+
+                .setLink("magnapubs.com/tptapp")
+                .build();
+
+        SimpleFacebook.getInstance().publish(feed, true, onPublishListener);
+    }
+
+
 
 
 }

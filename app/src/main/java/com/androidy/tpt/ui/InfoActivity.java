@@ -20,6 +20,7 @@ public class InfoActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
+
         backButtonInfo = (Button) findViewById(R.id.backButtonIn);
 
         backButtonInfo.setOnClickListener(new View.OnClickListener() {
