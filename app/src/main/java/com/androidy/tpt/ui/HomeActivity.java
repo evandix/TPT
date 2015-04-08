@@ -11,6 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -235,6 +236,7 @@ public class HomeActivity extends ListActivity {
             call.enqueue(new Callback() {
                 @Override
                 public void onFailure(Request request, IOException e) {
+                    Looper.prepare();
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
                     builder.setMessage("Something went wrong. Please try again");
@@ -711,7 +713,7 @@ do {
                 .setCaption(tip)
                 .setDescription(tip)
 
-                .setLink("magnapubs.com/tptapp")
+                .setLink("http://www.magnapubs.com/teaching-professor-conference/")
                 .build();
 
         SimpleFacebook.getInstance().publish(feed, true, onPublishListener);

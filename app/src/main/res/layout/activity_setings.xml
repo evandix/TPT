@@ -10,11 +10,13 @@
     tools:context=".MyActivity"
     android:background="@drawable/bg_gradient">
 
+
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Back"
-        android:id="@+id/backButton"
+        android:text="Cancel"
+        android:id="@+id/cancelButton"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -22,45 +24,85 @@
         android:textColor="@android:color/white"
         android:textSize="20sp"/>
 
-<TimePicker
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:id="@+id/alarmTimePicker"
-android:layout_alignParentTop="true"
-android:layout_centerHorizontal="true" />
-
-
-<ToggleButton
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="Alarm On/Off"
-android:id="@+id/alarmToggle"
-android:layout_centerHorizontal="true"
-android:layout_below="@+id/alarmTimePicker"
-android:onClick="onToggleClicked" />
-
-<TextView
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:textAppearance="?android:attr/textAppearanceLarge"
-android:text=""
-android:id="@+id/alarmText"
-android:layout_alignParentBottom="true"
-android:layout_centerHorizontal="true"
-android:layout_marginTop="20dp"
-android:layout_below="@+id/alarmToggle" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save"
         android:id="@+id/save"
-        android:layout_marginBottom="135dp"
-        android:layout_marginLeft="59dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/imageView"
-        android:layout_alignStart="@+id/imageView"
+        android:paddingRight="30dp"
+        android:layout_below="@+id/alarmTimePicker"
+        android:layout_alignParentRight="true"
         android:background="#00ffffff"
         android:textColor="@android:color/white"
         android:textSize="20sp"/>
-    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/cancelButton">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1. Choose tip reminder settings:"
+            android:id="@+id/textView"
+            android:gravity="center_horizontal"
+
+            android:textColor="@android:color/white"
+
+            />
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayoutToggle">
+
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Send tip reminders?"
+            android:id="@+id/sendTipRemiders"
+
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/alarmToggle"
+            android:layout_toStartOf="@+id/alarmToggle"
+            android:layout_alignWithParentIfMissing="false"
+            android:singleLine="true"
+            android:textColor="@android:color/white"/>
+
+            <ToggleButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alarm On/Off"
+            android:textColor="@android:color/white"
+            android:id="@+id/alarmToggle"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/alarmTimePicker"
+            android:onClick="onToggleClicked"
+            android:layout_alignParentRight="true"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <TimePicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:headerBackground="@null"
+        android:id="@+id/alarmTimePicker"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="90dp"/>
+
+
+
+
+</RelativeLayout>

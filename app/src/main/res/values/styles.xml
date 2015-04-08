@@ -5,4 +5,8 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name = "npColour" >
+        <item name = "android:textColor">#ffffff</item>
+    </style>
+
 </resources>

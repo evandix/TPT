@@ -62,7 +62,8 @@
             android:layout_above="@android:id/list"
             android:layout_centerInParent="true"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"/>
+            android:layout_marginRight="5dp"
+            android:layout_gravity="center_horizontal"/>
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -167,7 +168,10 @@
         android:id="@android:id/list"
         android:layout_below="@+id/lastFiveDaysTipsBanner"
         android:layout_centerHorizontal="true"
-        android:layout_above="@id/lineearLayoutButtons"/>
+        android:layout_above="@id/lineearLayoutButtons"
+        android:divider="#ffb7b7b7"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"/>
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
