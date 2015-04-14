@@ -51,6 +51,7 @@
             android:text="1. Choose tip reminder settings:"
             android:id="@+id/textView"
             android:gravity="center_horizontal"
+            android:textSize="20sp"
 
             android:textColor="@android:color/white"
 

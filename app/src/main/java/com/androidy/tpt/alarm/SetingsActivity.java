@@ -34,6 +34,7 @@ public class SetingsActivity extends Activity {
     private ToggleButton toggle1;
     private static SetingsActivity inst;
     private Button saveButton;
+    private boolean isSet = false;
 
 
     private Button cancelButton;
@@ -54,7 +55,16 @@ public class SetingsActivity extends Activity {
        timePicker = (TimePicker) findViewById(R.id.alarmTimePicker);
 
         setTimePickerTextColor(timePicker);
+
         timePicker.setIs24HourView(false);
+
+        if (!isSet) {
+            int min = getMinFromSharedPrefs(SetingsActivity.this);
+            int hour = getHourFromSharedPrefs(SetingsActivity.this);
+
+            timePicker.setCurrentHour(hour);
+            timePicker.setCurrentMinute(min);
+        }
 
         toggle1 = (ToggleButton) findViewById(R.id.alarmToggle);
 
@@ -68,6 +78,8 @@ public class SetingsActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(SetingsActivity.this , HomeActivity.class);
                 SetingsActivity.this.startActivity(intent);
+
+                setTheCurrentSetTime(SetingsActivity.this , timePicker);
             }
         });
 
@@ -85,7 +97,7 @@ public class SetingsActivity extends Activity {
 
 
 
-                    Log.d("MyActivity", "Alarm Off");
+                  //  Log.d("MyActivity", "Alarm Off");
 
                 }
 
@@ -99,13 +111,14 @@ public class SetingsActivity extends Activity {
             public void onClick(View v) {
 
                 if (toggle1.isChecked()) {
-                    Log.d("MyActivity", "Alarm On");
+                  //  Log.d("MyActivity", "Alarm On");
                     Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(System.currentTimeMillis());
                     calendar.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
                     calendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
                     Intent myIntent = new Intent(SetingsActivity.this, AlarmReceiver.class);
                     pendingIntent = PendingIntent.getBroadcast(SetingsActivity.this, 0, myIntent, 0);
-                    alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), 1000 * 60 * 60 * 24 , pendingIntent);
+                    alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY , pendingIntent);
 
                 } else {
                     alarmManager.cancel(pendingIntent);
@@ -115,6 +128,8 @@ public class SetingsActivity extends Activity {
 
                 Intent intent = new Intent(SetingsActivity.this , HomeActivity.class);
                 SetingsActivity.this.startActivity(intent);
+
+                setTheCurrentSetTime(SetingsActivity.this , timePicker);
 
             }
         });
@@ -176,16 +191,44 @@ public class SetingsActivity extends Activity {
                 number_picker.invalidate();
             }
             catch(NoSuchFieldException e){
-                Log.w("setNumberPickerTextColor", e);
+              //  Log.w("setNumberPickerTextColor", e);
             }
             catch(IllegalAccessException e){
-                Log.w("setNumberPickerTextColor", e);
+                // Log.w("setNumberPickerTextColor", e);
             }
             catch(IllegalArgumentException e){
-                Log.w("setNumberPickerTextColor", e);
+              //  Log.w("setNumberPickerTextColor", e);
             }
         }
     }
+
+    private void setTheCurrentSetTime(Context context , TimePicker timePicker) {
+        int hour  = timePicker.getCurrentHour();
+        int min = timePicker.getCurrentMinute();
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("Hour" , hour );
+        editor.putInt("Min" , min );
+        editor.commit();
+        isSet = true;
+
+
+    }
+
+    private int getHourFromSharedPrefs(Context context) {
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getInt("Hour", 12);
+
+    }
+    private int getMinFromSharedPrefs(Context context) {
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getInt("Min", 12);
+
+    }
+
 
 
 

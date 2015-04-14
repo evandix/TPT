@@ -26,7 +26,7 @@
         android:layout_marginRight="10dp"
         android:layout_toLeftOf="@+id/shareButton"
         android:layout_toRightOf="@+id/linkButton"
-        android:textSize="15sp"
+        android:textSize="14sp"
         android:focusableInTouchMode="true"
         android:focusable="true"
         android:gravity="center_horizontal|left"

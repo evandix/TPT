@@ -12,6 +12,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +25,7 @@ import com.androidy.tpt.R;
 import com.androidy.tpt.adapter.TipAdapter;
 import com.androidy.tpt.alarm.SetingsActivity;
 import com.androidy.tpt.info.Tips;
+import com.parse.ParseAnalytics;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
@@ -41,12 +43,14 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-
-
+import java.util.Map;
 
 
 public class HomeActivity extends ListActivity {
@@ -58,12 +62,14 @@ public class HomeActivity extends ListActivity {
     private TextView todaysDate;
     private TextView todaysTipText;
     String todaysTipMessage = "";
+    private Tips todaysTip;
 
 
 
 
     ArrayList<Tips> mTipsArrayList;
     ArrayList<Tips> tipsForLastSixDays;
+
     private int mMonth;
     private int mDay;
     private GregorianCalendar gc;
@@ -75,6 +81,8 @@ public class HomeActivity extends ListActivity {
     private ImageButton settingsButton;
     private ImageButton notifyButton;
     private ProgressBar mProgressBar;
+    private ImageButton socailLink;
+    private String linkFromTodaysTip = "";
 
     private SimpleFacebook mSimpleFacebook;
 
@@ -84,7 +92,22 @@ public class HomeActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        ParseAnalytics.trackAppOpened(getIntent());
+
+        Map<String, String> dimensions = new HashMap<String, String>();
+
+        dimensions.put("Shared", "twitter");
+
+        ParseAnalytics.trackEvent("Shared", dimensions);
+
         mSimpleFacebook = SimpleFacebook.getInstance(this);
+
+        socailLink = (ImageButton) findViewById(R.id.linkImageButton);
+
+
+
+
+
 
 
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -130,10 +153,20 @@ public class HomeActivity extends ListActivity {
         todaysDate = (TextView) findViewById(R.id.dateTextView);
         todaysTipText = (TextView) findViewById(R.id.todaysTipTextView);
 
+        todaysTipText.setMovementMethod(new ScrollingMovementMethod());
 
         twitterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Map<String, String> dimensions = new HashMap<String, String>();
+// What type of news is this?
+                dimensions.put("Shared", "twitter");
+// Is it a weekday or the weekend?
+
+// Send the dimensions to Parse along with the 'read' event
+
+                ParseAnalytics.trackEvent("Shared", dimensions);
 
                 // Create intent using ACTION_VIEW and a normal Twitter url:
                 String tweetUrl =
@@ -159,6 +192,15 @@ public class HomeActivity extends ListActivity {
             @Override
             public void onClick(View v) {
 
+                Map<String, String> dimensions = new HashMap<String, String>();
+// What type of news is this?
+                dimensions.put("Shared", "Facebook");
+// Is it a weekday or the weekend?
+
+// Send the dimensions to Parse along with the 'read' event
+
+                ParseAnalytics.trackEvent("Shared", dimensions);
+
                 publishToFacebook(todaysTipMessage);
 
             }
@@ -168,12 +210,22 @@ public class HomeActivity extends ListActivity {
             @Override
             public void onClick(View v) {
 
+                Map<String, String> dimensions = new HashMap<String, String>();
+// What type of news is this?
+                dimensions.put("Shared", "Email");
+// Is it a weekday or the weekend?
+
+// Send the dimensions to Parse along with the 'read' event
+
+                ParseAnalytics.trackEvent("Shared", dimensions);
+
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
 
 
 
                 shareIntent.setType("plain/text");
                 shareIntent.putExtra(Intent.EXTRA_TEXT, todaysTipMessage);
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Teaching Professor Tips");
                 startActivity(Intent.createChooser(shareIntent, "Share using"));
 
             }
@@ -181,6 +233,9 @@ public class HomeActivity extends ListActivity {
 
 
         setUpList();
+
+
+      
 
     }
 
@@ -258,7 +313,7 @@ public class HomeActivity extends ListActivity {
                     try {
 
                         String jsonData = response.body().string();
-                        Log.v(TAG, jsonData);
+                       // Log.v(TAG, jsonData);
                         if (response.isSuccessful()) {
                            mTipsArrayList = getTipArrayList(jsonData);
                         tipsForLastSixDays = searchThroughTips(mTipsArrayList);
@@ -271,6 +326,9 @@ public class HomeActivity extends ListActivity {
                                 @Override
                                 public void run() {
                                     updateList();
+
+
+
 
                                 }
                             });
@@ -293,10 +351,10 @@ public class HomeActivity extends ListActivity {
 
                         }
                     } catch (IOException e) {
-                        Log.e(TAG, "Exception caught", e);
+                       // Log.e(TAG, "Exception caught", e);
                     }
                     catch (JSONException e) {
-                        Log.e(TAG, "Exception caught", e);
+                       // Log.e(TAG, "Exception caught", e);
                     }
                 }
             });
@@ -355,7 +413,7 @@ public class HomeActivity extends ListActivity {
         for (int i = 0 ; i < keys.size() ; i ++ ) {
             String keyForSearching = keys.get(i);
 
-            Log.v(TAG, keyForSearching);
+           // Log.v(TAG, keyForSearching);
 
             for (int ii = 0; ii < tipsArrayList.size(); ii++) {
                 Tips tip = tipsArrayList.get(ii);
@@ -367,32 +425,55 @@ public class HomeActivity extends ListActivity {
                 if (keyForSearching.equalsIgnoreCase(keyFromTip)) {
 
                     refinedSixTips.add(tip);
-                    Log.v(TAG, "success");
+                  //  Log.v(TAG, "success");
 
 
 
                 } else {
-                    Log.v(TAG, "...");
+                  //  Log.v(TAG, "...");
                 }
             }
         }
-        Log.v(TAG, refinedSixTips.size() + "");
+     //   Log.v(TAG, refinedSixTips.size() + "");
         return refinedSixTips;
     }
 
     private void updateList() {
 
-        Tips todaysTip = tipsForLastSixDays.get(0);
+        todaysTip = tipsForLastSixDays.get(0);
+
+
+        linkFromTodaysTip = todaysTip.getLink();
+
+        if (linkFromTodaysTip.length() > 5 ) {
+            socailLink.setImageResource(R.drawable.whitelinkforsocial);
+            socailLink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(linkFromTodaysTip));
+                    HomeActivity.this.startActivity(intent);
+                }
+            });
+        }
+
+      //  Log.v(TAG , linkFromTodaysTip);
+
+
         todaysTipMessage = todaysTip.getMessage();
-        Log.v(TAG, todaysTipMessage);
+       // Log.v(TAG, todaysTipMessage);
         todaysTipText.setText(todaysTipMessage);
 
           tipsForLastSixDays.remove(0);
-        Log.v(TAG, tipsForLastSixDays.size() + "");
+       // Log.v(TAG, tipsForLastSixDays.size() + "");
 
      tipsArray = new Tips[tipsForLastSixDays
              .size()];
         tipsArray = tipsForLastSixDays.toArray(tipsArray);
+
+
+
+
 
         String todaysDatee = getDate(new GregorianCalendar());
         todaysDate.setText(todaysDatee);
@@ -430,7 +511,7 @@ public class HomeActivity extends ListActivity {
                 tipsForSorting.setMessage(message);
 
                 tipsForSorting.setMonth(monthName);
-                Log.v(TAG , monthName);
+               // Log.v(TAG , monthName);
                 tipsForSorting.setDay(dayInt);
 
                 searchingArrayList.add(tipsForSorting);
@@ -587,102 +668,20 @@ public class HomeActivity extends ListActivity {
         return  isAvailible;
     }
 
-    /*
-            GregorianCalendar gc = new GregorianCalendar();
-
-        //gc.get(Calendar.MONTH);
-
-        ArrayList<String> m = new ArrayList<String>();
-do {
-    int month = gc.get(Calendar.MONTH) + 1; //
-
-    String monthName = getMonthName(month);
-    int day = gc.get(Calendar.DATE);
 
 
-    Log.v(TAG, monthName + "" + day);
-    m.add("a");
-
-    gc.add(Calendar.DATE, -1);
-
-} while (m.size() < 30);
-
-    }
-     */
-
-    /**
-     * Share to Twitter
-     *
-     * @param tip
-     */
-    private void sendEmail(String emailAddress, String tip) {
-        Intent emailIntent = new Intent(Intent.ACTION_SENDTO,
-                Uri.fromParts("mailto", emailAddress, null));
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Teaching Professor Tips");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, tipFromToday);
-        startActivity(Intent.createChooser(emailIntent, "Send email:"));
-    }
 
 
-    /*
 
 
-    private void publishToFacebook(String tip){
-        OnPublishListener onPublishListener = new OnPublishListener() {
-            @Override
-            public void onComplete(String postId) {
-                Log.i("", "Published successfully. The new post id = " + postId);
-                TtfpManager.getInstance().trackShareSuccessful(TtfpManager.SHARE_VIA.FACEBOOK);
-            }
 
-            @Override
-            public void onFail(String reason) {
-                super.onFail(reason);
-
-                TtfpManager.getInstance().trackShareIncomplete(TtfpManager.SHARE_VIA.FACEBOOK);
-            }
-
-
-              You can override other methods here:
-             onThinking(), onFail(String reason), onException(Throwable throwable)
-
-        };
-
-        Feed feed = new Feed.Builder()
-                .setMessage(tip)
-                .setName(getString(R.string.ttfp_fullname))
-                .setCaption(tip)
-                .setDescription(tip)
-                .setPicture(getString(R.string.logo_url))
-                .setLink(getString(R.string.ttfp_website))
-                .build();
-
-        SimpleFacebook.getInstance().publish(feed, true, onPublishListener);
-    }
-
-
-                */
-
-
-    /**
-     * Share to Twitter
-     *
-     * @para
-
-    private void publishToTwitter(String tip) {
-    Intent intent = new Intent(getApplicationContext(), Webview4TwitterActivity.class);
-    intent.putExtra("tip", tip);
-    startActivity(intent);
-    }
-
-     */
 
     public static String urlEncode(String s) {
         try {
             return URLEncoder.encode(s, "UTF-8");
         }
         catch (UnsupportedEncodingException e) {
-            Log.wtf(TAG, "UTF-8 should always be supported", e);
+          //  Log.wtf(TAG, "UTF-8 should always be supported", e);
             throw new RuntimeException("URLEncoder.encode() failed for " + s);
         }
     }
@@ -691,7 +690,7 @@ do {
         OnPublishListener onPublishListener = new OnPublishListener() {
             @Override
             public void onComplete(String postId) {
-                Log.i("", "Published successfully. The new post id = " + postId);
+               // Log.i("", "Published successfully. The new post id = " + postId);
             }
 
             @Override
@@ -701,10 +700,6 @@ do {
 
             }
 
-            /*
-             * You can override other methods here:
-             * onThinking(), onFail(String reason), onException(Throwable throwable)
-             */
         };
 
         Feed feed = new Feed.Builder()
@@ -712,6 +707,8 @@ do {
                 .setName("TPT")
                 .setCaption(tip)
                 .setDescription(tip)
+
+                .setPicture("http://mostbeastlystudios.com/wp-content/uploads/2015/03/iTunesArtwork@2x1-e1427410350476.png")
 
                 .setLink("http://www.magnapubs.com/teaching-professor-conference/")
                 .build();

@@ -38,11 +38,13 @@
         android:layout_toStartOf="@+id/imageView"
         android:layout_below="@+id/backButton"
         android:layout_toLeftOf="@+id/imageView"
-        android:layout_marginRight="39dp"
+        android:layout_marginRight="30dp"
         android:layout_marginTop="60dp"
         android:textColor="@android:color/white"
         android:textSize="30sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:gravity="left"
+        android:maxLines="1"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -54,7 +56,8 @@
         android:layout_alignLeft="@+id/rateUsButton"
         android:layout_alignRight="@+id/rateUsButton"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:background="#c7ffffff"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -66,7 +69,8 @@
         android:layout_alignRight="@+id/rateUsButton"
         android:layout_alignLeft="@+id/rateUsButton"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:background="#c7ffffff"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -78,15 +82,19 @@
         android:layout_alignLeft="@+id/rateUsButton"
         android:layout_alignRight="@+id/rateUsButton"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:background="#c7ffffff"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rate us on the app store"
+        android:text="Rate us on Google Play"
         android:id="@+id/rateUsButton"
         android:layout_below="@+id/submitATipButton"
         android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp"
+        android:background="#c7ffffff"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"/>
 
 </RelativeLayout>

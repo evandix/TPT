@@ -14,6 +14,10 @@ import android.widget.TextView;
 
 import com.androidy.tpt.R;
 import com.androidy.tpt.info.Tips;
+import com.parse.ParseAnalytics;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by christinajackey on 3/24/15.
@@ -36,7 +40,7 @@ public class TipAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-         return mTips[mTips.length - position - 1];
+         return mTips[position];
 
     }
 
@@ -94,6 +98,15 @@ public class TipAdapter extends BaseAdapter {
         holder.shareImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Map<String, String> dimensions = new HashMap<String, String>();
+// What type of news is this?
+                dimensions.put("Share", "Generic Share Button");
+// Is it a weekday or the weekend?
+
+// Send the dimensions to Parse along with the 'read' event
+
+                ParseAnalytics.trackEvent("read", dimensions);
 
                 String textToShare = tip.getMessage();
                 Intent intent = new Intent(Intent.ACTION_SEND);
