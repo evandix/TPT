@@ -115,7 +115,7 @@
 
     <TextView
         android:layout_width="270dp"
-        android:layout_height="130dp"
+        android:layout_height="120dp"
         android:text="Think about your most significant teaching problem and ask yourself three questions: 1. How will solving this problem though the use of technology make me a better teacher? 2. Are there any risks to the quality of my teaching if I adopt this technology? 3. Do the benefits of adopting this technology outweigh the risks? -Christopher Price, SUNY Brockport. Teaching Professor Conference invited presenter."
         android:id="@+id/todaysTipTextView"
         android:layout_below="@+id/dateTextView"

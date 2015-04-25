@@ -21,13 +21,18 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
+        <meta-data android:name="com.parse.push.notification_icon" android:resource="@drawable/ic_launcher"/>
         <activity
             android:name=".ui.HomeActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ui.SplashActivity"
-            android:label="@string/title_activity_splash" >
+            android:label="@string/title_activity_splash"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,11 +41,15 @@
         </activity>
         <activity
             android:name=".ui.Webview4TwitterActivity"
-            android:label="@string/title_activity_webview4_twitter" >
+            android:label="@string/title_activity_webview4_twitter"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".alarm.SetingsActivity"
-            android:label="@string/title_activity_alarm" >
+            android:label="@string/title_activity_alarm"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
         </activity>
 
         <service
@@ -52,12 +61,16 @@
         <activity
 
             android:name=".ui.InfoActivity"
-            android:label="@string/title_activity_info" >
+            android:label="@string/title_activity_info"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
         </activity>
         <activity
 
             android:name=".ui.NotifyActivity"
-            android:label="@string/title_activity_notify" >
+            android:label="@string/title_activity_notify"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
         </activity>
 
         <service android:name="com.parse.PushService" />
